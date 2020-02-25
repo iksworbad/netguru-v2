@@ -1,0 +1,29 @@
+version: "3.7"
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=netguru
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    restart: always
+
+  postgres-test:
+    image: postgres
+    container_name: postgres-test
+    environment:
+      - POSTGRES_DB=netguru_test
+      - POSTGRES_USER=postgres
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: always
+
+volumes:
+  postgres_data:
+  postgres_test_data:
