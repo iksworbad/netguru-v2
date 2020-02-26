@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "gather": " yarn docker && yarn build && yarn start",
-    "build": "rm -rf dist && tsc",
+    "build": "yarn docker && yarn build && yarn start",
+    "build:dev": "rm -rf dist && tsc",
     "start": "NODE_PATH=dist/ node dist/src/index.js",
     "start:dev": "NODE_PATH=. ts-node src/index.ts",
     "start:watch": "NODE_PATH=. nodemon",
