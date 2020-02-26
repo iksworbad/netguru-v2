@@ -6,7 +6,7 @@ import { asAnyOf, asNumber, asObject, asOptional, asString, asExactly } from '@r
 export const moviesRoute = (movieService: MovieService) => {
   const router = Router()
 
-  router.post('/movie', asyncHandler(
+  router.post('/movies', asyncHandler(
     sanitize({
       body: asObject({
         title: asString,
@@ -18,7 +18,7 @@ export const moviesRoute = (movieService: MovieService) => {
     async ({ body }) => responseOf(await movieService.addMovieToDataBase(body), 201)
   ))
 
-  router.get('/movie', asyncHandler(
+  router.get('/movies', asyncHandler(
     async () => responseOf(await movieService.getSavedMovies(), 200),
   ))
 

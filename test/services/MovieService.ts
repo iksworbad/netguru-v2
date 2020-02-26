@@ -46,6 +46,11 @@ describe('MovieService', () => {
       expect(await movieService.getSavedMovies()).to.deep.eq([{id: 1, movie: {movie: 'foo' }}, {id: 2, movie: {movie: 'foo2' }}])
     });
 
+    it('returns empty array if database is empty', async () => {
+      movieService = new MovieService({} as any, db)
+      expect(await movieService.getSavedMovies()).to.deep.eq([])
+    });
+
     afterEach(async () => {
       await db('movies').truncate()
     })

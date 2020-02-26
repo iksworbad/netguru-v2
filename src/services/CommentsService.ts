@@ -6,7 +6,6 @@ export class CommentsService {
 
   async addComment(videoId: number, comment: string) {
     const videoExistsInDB = await this.knex('movies').where({id: videoId}).select().first()
-    console.log(videoExistsInDB)
     if (!videoExistsInDB)
       throw new MovieNotExistInDatabase()
     const id = await this.knex('comments')

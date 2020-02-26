@@ -13,6 +13,7 @@ describe('commentRoutes', () => {
   let app: Express
   let db: Knex
   let mockServices: Services
+  let request: ChaiHttp.Agent
   const externalAPI = {
     getData: sinon.stub().resolves({ title: 'terminator' })
   } as any
@@ -26,37 +27,57 @@ describe('commentRoutes', () => {
     } as Services
   })
 
-  describe('POST /comment', () => {
-    it('upload comment when movie exists in database', async () => {
-      app = createApp(mockServices, config, db)
-      await db('movies').insert({movie:{bar: 'foo'}})
-      const result = await chai.request(app)
-        .post('/api/comment')
-        .send({
-          id_video: 1,
-          comment: 'hello world'
-        })
+  beforeEach( () => {
+    app = createApp(mockServices, config, db)
+    request = chai.request(app)
+  })
 
-      expect(result.status).to.have.status(201)
-      expect(result.body).to.deep.eq({ id: 1, id_video: 1, comment: "hello world"})
-    })
+  it('POST /comment upload comment when movie exists in database', async () => {
+    await db('movies').insert({movie:{bar: 'foo'}})
+    const result = await request
+      .post('/api/comments')
+      .send({
+        id_video: 1,
+        comment: 'hello world'
+      })
 
-    it('rejected by invalid data', async () => {
-      app = createApp(mockServices, config, db)
-      const res = await chai.request(app)
-        .post('/api/comment')
-        .send({
-          id_video: 'a', // if here will me '1' it will be converted to number
-          comment: 'hello'
-        })
-      expect(res).to.have.status(400)
-      expect(res.body.errors).to.deep.eq([{ expected: 'number', path: 'body.id_video' }])
-    })
+    expect(result).to.have.status(201)
+    expect(result.body).to.deep.eq({ id: 1, id_video: 1, comment: "hello world"})
+  })
 
-    afterEach(async () => {
-      await db('movies').truncate()
-      await db('comments').truncate()
-    })
+  it(' POST /comments rejected by invalid data', async () => {
+    const res = await request
+      .post('/api/comments')
+      .send({
+        id_video: 'a', // if here will me '1' it will be converted to number
+        comment: 'hello'
+      })
+    expect(res).to.have.status(400)
+    expect(res.body.errors).to.deep.eq([{ expected: 'number', path: 'body.id_video' }])
+  })
+
+
+  it(' GET /comments returns empty array if db is empty', async () => {
+    const res = await request
+      .get('/api/comments')
+      .send()
+    expect(res).to.have.status(200)
+    expect(res.body).to.deep.eq([])
+  })
+
+  it(' GET /comments returns all date from db', async () => {
+    await db('comments').insert({id_video: 1, comment: 'hello world'})
+    const res = await request
+      .get('/api/comments')
+      .send()
+    expect(res).to.have.status(200)
+    expect(res.body).to.deep.eq([{id: 1, id_video: 1, comment: 'hello world'}])
+  })
+
+
+  afterEach(async () => {
+    await db('movies').truncate()
+    await db('comments').truncate()
   })
 
   after(async () => {

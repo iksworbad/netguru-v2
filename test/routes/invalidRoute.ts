@@ -6,14 +6,14 @@ import Knex from 'knex'
 import { Services } from '../../src/services'
 
 
-describe('invalid url', () => {
+describe('invalid route', () => {
   it('return error for not existing endpoint', async () => {
     const db = Knex(config.database)
     const app = createApp({} as Services, config, db)
     // @ts-ignore
     const res = await chai.request(app)
       .get('/api/INVALID').send()
-    expect(res.status).to.eq(404)
+    expect(res).to.have.status(404)
     expect(res.body.message).to.eq('Cannot GET /INVALID')
   })
 })

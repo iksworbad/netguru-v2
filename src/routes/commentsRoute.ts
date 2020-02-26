@@ -6,7 +6,7 @@ import {CommentsService} from '../services/CommentsService';
 export const commentsRoute = (commentsService: CommentsService) => {
   const router = Router()
 
-  router.post('/comment', asyncHandler(
+  router.post('/comments', asyncHandler(
     sanitize({
       body: asObject({
         id_video: asNumber,
@@ -16,7 +16,7 @@ export const commentsRoute = (commentsService: CommentsService) => {
     async ({ body }) => responseOf(await commentsService.addComment(body.id_video, body.comment), 201)
   ))
 
-  router.get('/movie', asyncHandler(
+  router.get('/comments', asyncHandler(
     async () => responseOf(await commentsService.getAllComments(), 200),
   ))
 
