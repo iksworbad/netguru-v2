@@ -7,13 +7,12 @@
         "plugin:@typescript-eslint/recommended",
         "plugin:import/errors",
         "plugin:import/warnings",
-        "plugin:import/typescript",
-        "plugin:react/recommended"
+        "plugin:import/typescript"
     ],
     "overrides": [
         {
             "files": [
-                "test/**/*.{js,ts,tsx}"
+                "test/**/*.{js,ts}"
             ],
             "rules": {
                 "@typescript-eslint/no-explicit-any": "off",
@@ -28,8 +27,7 @@
         "sourceType": "module"
     },
     "plugins": [
-        "import",
-        "react-hooks"
+        "import"
     ],
     "rules": {
         "@typescript-eslint/camelcase": "off",
@@ -404,17 +402,6 @@
                 "allowTemplateLiterals": true
             }
         ],
-        "react-hooks/exhaustive-deps": "warn",
-        "react-hooks/rules-of-hooks": "error",
-        "react/display-name": "off",
-        "react/jsx-tag-spacing": [
-            "error",
-            {
-                "beforeClosing": "never",
-                "beforeSelfClosing": "never"
-            }
-        ],
-        "react/prop-types": "off",
         "rest-spread-spacing": [
             "error",
             "never"
@@ -520,8 +507,5 @@
         ]
     },
     "settings": {
-        "react": {
-            "version": "detect"
-        }
     }
 }

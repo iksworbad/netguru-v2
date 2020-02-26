@@ -1,16 +1,23 @@
 import express from 'express'
 import cors from 'cors'
 import * as bodyParser from 'body-parser'
-import {appRouter} from './routes'
-import {unknownEndpoint} from './middleware/unknownEndpoint'
+import { appRouter } from './routes'
+import { Services } from './services'
+import { Config } from './config'
+import Knex from 'knex'
+import errorHandler from './utils/errorHandler'
+import { notFound } from './routes/notFound'
 
-const app = express()
+export const createApp = (services: Services, config: Config, db: Knex) => {
+  const app = express()
 
-app.use(cors())
-app.use(bodyParser.json())
+  app.use(cors())
+  app.use(bodyParser.json())
 
-app.use('/api', appRouter());
-// Throw 404 error for unknown API routes
-app.use('/api', unknownEndpoint)
+  app.use('/api', appRouter(services))
+  app.use('/api', notFound)
 
-export { app }
+  app.use(errorHandler)
+
+  return app
+}

@@ -1,11 +1,12 @@
-version: "3.7"
+version: "2.1"
 services:
   postgres:
-    image: postgres
+    image: postgres:9.6-alpine
     container_name: postgres
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=netguru
+      - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
@@ -13,11 +14,12 @@ services:
     restart: always
 
   postgres-test:
-    image: postgres
+    image: postgres:9.6-alpine
     container_name: postgres-test
     environment:
-      - POSTGRES_DB=netguru_test
       - POSTGRES_USER=postgres
+      - POSTGRES_DB=netguru
+      - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
       - postgres_test_data:/var/lib/postgresql/data
     ports:

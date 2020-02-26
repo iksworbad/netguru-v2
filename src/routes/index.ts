@@ -1,10 +1,11 @@
-import {Router} from 'express';
+import { Router } from 'express'
+import { moviesRoute } from './moviesRoute'
+import { Services } from '../services'
 
-// TODO: add to appRouter services: Services, config: Config
-export function appRouter () {
+export function appRouter(services: Services) {
   const router = Router()
 
-  //router.use()
+  router.use(moviesRoute(services.movieService))
 
   return router
 }
