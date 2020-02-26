@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { moviesRoute } from './moviesRoute'
 import { Services } from '../services'
-import {commentsRoute} from './commentsRoute';
+import { commentsRoute } from './commentsRoute'
 
 export function appRouter(services: Services) {
   const router = Router()

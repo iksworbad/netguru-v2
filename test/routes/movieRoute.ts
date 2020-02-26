@@ -25,7 +25,7 @@ describe('movieRoutes', () => {
     } as Services
   })
 
-  beforeEach( () => {
+  beforeEach(() => {
     app = createApp(mockServices, config, db)
     request = chai.request(app)
   })
@@ -62,12 +62,12 @@ describe('movieRoutes', () => {
   })
 
   it(' GET /movies returns all date from db', async () => {
-    await db('movies').insert({movie: JSON.stringify({foo: 'bar'})})
+    await db('movies').insert({ movie: JSON.stringify({ foo: 'bar' }) })
     const res = await request
       .get('/api/movies')
       .send()
     expect(res).to.have.status(200)
-    expect(res.body).to.deep.eq([{id: 1, movie: {foo: 'bar'}}])
+    expect(res.body).to.deep.eq([{ id: 1, movie: { foo: 'bar' } }])
   })
 
   afterEach(async () => {

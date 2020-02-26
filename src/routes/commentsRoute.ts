@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { asyncHandler, responseOf, sanitize } from '@restless/restless'
 import { asNumber, asObject, asString } from '@restless/sanitizers'
-import {CommentsService} from '../services/CommentsService';
+import { CommentsService } from '../services/CommentsService'
 
 export const commentsRoute = (commentsService: CommentsService) => {
   const router = Router()

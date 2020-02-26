@@ -7,7 +7,7 @@ import Knex from 'knex'
 import sinon from 'sinon'
 import { MovieService } from '../../src/services/MovieSerivce'
 import { Services } from '../../src/services'
-import {CommentsService} from '../../src/services/CommentsService';
+import { CommentsService } from '../../src/services/CommentsService'
 
 describe('commentRoutes', () => {
   let app: Express
@@ -27,13 +27,13 @@ describe('commentRoutes', () => {
     } as Services
   })
 
-  beforeEach( () => {
+  beforeEach(() => {
     app = createApp(mockServices, config, db)
     request = chai.request(app)
   })
 
   it('POST /comment upload comment when movie exists in database', async () => {
-    await db('movies').insert({movie:{bar: 'foo'}})
+    await db('movies').insert({ movie: { bar: 'foo' } })
     const result = await request
       .post('/api/comments')
       .send({
@@ -42,7 +42,7 @@ describe('commentRoutes', () => {
       })
 
     expect(result).to.have.status(201)
-    expect(result.body).to.deep.eq({ id: 1, id_video: 1, comment: "hello world"})
+    expect(result.body).to.deep.eq({ id: 1, id_video: 1, comment: 'hello world' })
   })
 
   it(' POST /comments rejected by invalid data', async () => {
@@ -66,12 +66,12 @@ describe('commentRoutes', () => {
   })
 
   it(' GET /comments returns all date from db', async () => {
-    await db('comments').insert({id_video: 1, comment: 'hello world'})
+    await db('comments').insert({ id_video: 1, comment: 'hello world' })
     const res = await request
       .get('/api/comments')
       .send()
     expect(res).to.have.status(200)
-    expect(res.body).to.deep.eq([{id: 1, id_video: 1, comment: 'hello world'}])
+    expect(res.body).to.deep.eq([{ id: 1, id_video: 1, comment: 'hello world' }])
   })
 
 

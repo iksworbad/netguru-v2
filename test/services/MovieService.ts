@@ -41,20 +41,20 @@ describe('MovieService', () => {
   describe('getSavedMovies', () => {
     it('returns array of movies', async () => {
       movieService = new MovieService({} as any, db)
-      await db('movies').insert({ movie: {movie: 'foo' }})
-      await db('movies').insert({ movie: {movie: 'foo2' }})
-      expect(await movieService.getSavedMovies()).to.deep.eq([{id: 1, movie: {movie: 'foo' }}, {id: 2, movie: {movie: 'foo2' }}])
-    });
+      await db('movies').insert({ movie: { movie: 'foo' } })
+      await db('movies').insert({ movie: { movie: 'foo2' } })
+      expect(await movieService.getSavedMovies()).to.deep.eq([{ id: 1, movie: { movie: 'foo' } }, { id: 2, movie: { movie: 'foo2' } }])
+    })
 
     it('returns empty array if database is empty', async () => {
       movieService = new MovieService({} as any, db)
       expect(await movieService.getSavedMovies()).to.deep.eq([])
-    });
+    })
 
     afterEach(async () => {
       await db('movies').truncate()
     })
-  });
+  })
 
   after(async () => {
     await db.destroy()
