@@ -51,3 +51,9 @@ export class InvalidRequest extends HttpAwareError {
     }
   }
 }
+
+export class MovieNotExistInDatabase extends HttpAwareError {
+  constructor() {
+    super(`Movie do not exist in database`, 'ENDPOINT_NOT_FOUND', 404)
+  }
+}

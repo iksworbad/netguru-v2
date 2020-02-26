@@ -10,6 +10,7 @@ describe('invalid url', () => {
   it('return error for not existing endpoint', async () => {
     const db = Knex(config.database)
     const app = createApp({} as Services, config, db)
+    // @ts-ignore
     const res = await chai.request(app)
       .get('/api/INVALID').send()
     expect(res.status).to.eq(404)

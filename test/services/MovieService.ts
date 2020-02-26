@@ -33,11 +33,23 @@ describe('MovieService', () => {
       await expect(movieService.addMovieToDataBase({ title: 'terminator' } as any)).to.rejectedWith((new MovieNotFound()).message)
     })
 
-
     afterEach(async () => {
       await db('movies').truncate()
     })
   })
+
+  describe('getSavedMovies', () => {
+    it('returns array of movies', async () => {
+      movieService = new MovieService({} as any, db)
+      await db('movies').insert({ movie: {movie: 'foo' }})
+      await db('movies').insert({ movie: {movie: 'foo2' }})
+      expect(await movieService.getSavedMovies()).to.deep.eq([{id: 1, movie: {movie: 'foo' }}, {id: 2, movie: {movie: 'foo2' }}])
+    });
+
+    afterEach(async () => {
+      await db('movies').truncate()
+    })
+  });
 
   after(async () => {
     await db.destroy()

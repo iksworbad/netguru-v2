@@ -11,4 +11,8 @@ export class MovieService {
       .insert({ movie: JSON.stringify(movie) }, 'id')
     return { id: id[0], movie }
   }
+
+  async getSavedMovies() {
+    return this.knex('movies').select()
+  }
 }

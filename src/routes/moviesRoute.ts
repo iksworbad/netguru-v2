@@ -18,5 +18,9 @@ export const moviesRoute = (movieService: MovieService) => {
     async ({ body }) => responseOf(await movieService.addMovieToDataBase(body), 201)
   ))
 
+  router.get('/movie', asyncHandler(
+    async () => responseOf(await movieService.getSavedMovies(), 200),
+  ))
+
   return router
 }
