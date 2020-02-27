@@ -6,6 +6,7 @@
   "scripts": {
     "build": "rm -rf dist && tsc",
     "start": "NODE_PATH=dist/ node dist/src/index.js",
+    "heroku": "yarn build && yarn start",
     "start:dev": " ts-node src/index.ts",
     "start:watch": " nodemon",
     "lint": "eslint '{src,test}/**/*.{js,ts}'",
