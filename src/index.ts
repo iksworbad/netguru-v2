@@ -8,17 +8,28 @@ const setupDatabase = async (db: Knex) => {
   await db.migrate.latest()
 }
 
-const db = Knex(config.database)
+export const startServer = async () => {
+  const db = Knex(config.database)
+  console.log(config.database)
 
-setupDatabase(db).catch((err) => {
-  console.error(err)
-  process.exit(1)
-}).then(() => db.destroy())
+  setupDatabase(db).catch((err) => {
+    console.error(err)
+    process.exit(1)
+  }).then(() => db.destroy())
 
-const services = createServices(config, db)
+  const services = createServices(config, db)
 
-const server = createServer(createApp(services))
-server.listen(config.port)
-server.on('listening', () => {
-  console.log(`Listening on port: ${config.port}`)
-})
+  const server = createServer(createApp(services))
+  server.listen(config.port)
+  server.on('listening', () => {
+    console.log(`Listening on port: ${config.port}`)
+  })
+
+
+  return async function stopServer() {
+    await db.destroy()
+    server.close()
+  }
+}
+
+startServer().catch(console.error);

@@ -1,7 +1,5 @@
-// import express from 'express'
-// import cors from 'cors'
-const express = require('express')
-const cors = require('cors')
+import express from 'express'
+import cors from 'cors'
 import * as bodyParser from 'body-parser'
 import { appRouter } from './routes'
 import { Services } from './services'
