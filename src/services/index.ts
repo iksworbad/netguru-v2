@@ -6,8 +6,7 @@ import { CommentsService } from './CommentsService'
 
 export type Services = ReturnType<typeof createServices>
 
-export function createServices(config: Config) {
-  const knex = Knex(config.database)
+export function createServices(config: Config, knex: Knex) {
   const externalApi = new ExternalApi(config)
   const movieService = new MovieService(externalApi, knex)
   const commentsService = new CommentsService(knex)

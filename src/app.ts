@@ -3,12 +3,10 @@ import cors from 'cors'
 import * as bodyParser from 'body-parser'
 import { appRouter } from './routes'
 import { Services } from './services'
-import { Config } from './config'
-import Knex from 'knex'
 import errorHandler from './utils/errorHandler'
 import { notFound } from './routes/notFound'
 
-export const createApp = (services: Services, config: Config, db: Knex) => {
+export const createApp = (services: Services) => {
   const app = express()
 
   app.use(cors())
@@ -16,6 +14,7 @@ export const createApp = (services: Services, config: Config, db: Knex) => {
 
   app.use('/api', appRouter(services))
   app.use('/api', notFound)
+  app.use('/', notFound)
 
   app.use(errorHandler)
 

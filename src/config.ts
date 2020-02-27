@@ -1,5 +1,6 @@
 
 export const config = Object.freeze({
+  port: Number(process.env.PORT) || 8080,
   database: {
     client: 'pg',
     connection: process.env.DATABASE_URL || 'netguru://postgres@localhost:5433/postgres'

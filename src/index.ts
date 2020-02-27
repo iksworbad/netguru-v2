@@ -8,7 +8,6 @@ const setupDatabase = async (db: Knex) => {
   await db.migrate.latest()
 }
 
-const PORT = 8080
 const db = Knex(config.database)
 
 setupDatabase(db).catch((err) => {
@@ -16,10 +15,10 @@ setupDatabase(db).catch((err) => {
   process.exit(1)
 }).then(() => db.destroy())
 
-const services = createServices(config)
+const services = createServices(config, db)
 
-const server = createServer(createApp(services, config, db))
-server.listen(PORT)
+const server = createServer(createApp(services))
+server.listen(config.port)
 server.on('listening', () => {
-  console.log(`Listening on port: ${PORT}`)
+  console.log(`Listening on port: ${config.port}`)
 })

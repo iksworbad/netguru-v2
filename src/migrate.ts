@@ -5,7 +5,6 @@ import { config } from './config'
   const knex = Knex(config.database)
   try {
     await knex.migrate.latest()
-    await knex.destroy()
   } catch (e) {
     console.error(e)
     await knex.destroy()
