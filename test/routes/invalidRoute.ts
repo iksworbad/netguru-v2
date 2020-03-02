@@ -10,6 +10,7 @@ describe('invalid route', () => {
   it('return error for not existing endpoint', async () => {
     const db = Knex(config.database)
     const app = createApp({} as Services, config, db)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     const res = await chai.request(app)
       .get('/api/INVALID').send()

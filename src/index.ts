@@ -10,12 +10,12 @@ const setupDatabase = async (db: Knex) => {
 
 export const startServer = async () => {
   const db = Knex(config.database)
-  console.log(config.database)
 
   setupDatabase(db).catch((err) => {
     console.error(err)
+    db.destroy()
     process.exit(1)
-  }).then(() => db.destroy())
+  }).then(() => { /* do nothing */ })
 
   const services = createServices(config, db)
 
@@ -32,4 +32,4 @@ export const startServer = async () => {
   }
 }
 
-startServer().catch(console.error);
+startServer().catch(console.error)

@@ -10,4 +10,5 @@ import { config } from './config'
     await knex.destroy()
     process.exit(1)
   }
+  process.exit(0)
 })()
